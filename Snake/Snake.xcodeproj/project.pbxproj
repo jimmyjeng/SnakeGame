@@ -8,11 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		CD6F0D302232D85700B36A6F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6F0D2F2232D85700B36A6F /* AppDelegate.swift */; };
-		CD6F0D322232D85700B36A6F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6F0D312232D85700B36A6F /* ViewController.swift */; };
+		CD6F0D322232D85700B36A6F /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6F0D312232D85700B36A6F /* GameViewController.swift */; };
 		CD6F0D352232D85700B36A6F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD6F0D332232D85700B36A6F /* Main.storyboard */; };
 		CD6F0D372232D85800B36A6F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CD6F0D362232D85800B36A6F /* Assets.xcassets */; };
 		CD6F0D3A2232D85800B36A6F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD6F0D382232D85800B36A6F /* LaunchScreen.storyboard */; };
 		CD6F0D452232D85900B36A6F /* SnakeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6F0D442232D85900B36A6F /* SnakeTests.swift */; };
+		CD6F0D522232E72C00B36A6F /* SnakeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6F0D512232E72C00B36A6F /* SnakeManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -28,7 +29,7 @@
 /* Begin PBXFileReference section */
 		CD6F0D2C2232D85700B36A6F /* Snake.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Snake.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD6F0D2F2232D85700B36A6F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		CD6F0D312232D85700B36A6F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		CD6F0D312232D85700B36A6F /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		CD6F0D342232D85700B36A6F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CD6F0D362232D85800B36A6F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CD6F0D392232D85800B36A6F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -36,6 +37,7 @@
 		CD6F0D402232D85800B36A6F /* SnakeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SnakeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD6F0D442232D85900B36A6F /* SnakeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnakeTests.swift; sourceTree = "<group>"; };
 		CD6F0D462232D85900B36A6F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CD6F0D512232E72C00B36A6F /* SnakeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnakeManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,11 +80,12 @@
 			isa = PBXGroup;
 			children = (
 				CD6F0D2F2232D85700B36A6F /* AppDelegate.swift */,
-				CD6F0D312232D85700B36A6F /* ViewController.swift */,
+				CD6F0D312232D85700B36A6F /* GameViewController.swift */,
 				CD6F0D332232D85700B36A6F /* Main.storyboard */,
 				CD6F0D362232D85800B36A6F /* Assets.xcassets */,
 				CD6F0D382232D85800B36A6F /* LaunchScreen.storyboard */,
 				CD6F0D3B2232D85800B36A6F /* Info.plist */,
+				CD6F0D512232E72C00B36A6F /* SnakeManager.swift */,
 			);
 			path = Snake;
 			sourceTree = "<group>";
@@ -197,8 +200,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CD6F0D322232D85700B36A6F /* ViewController.swift in Sources */,
+				CD6F0D322232D85700B36A6F /* GameViewController.swift in Sources */,
 				CD6F0D302232D85700B36A6F /* AppDelegate.swift in Sources */,
+				CD6F0D522232E72C00B36A6F /* SnakeManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
