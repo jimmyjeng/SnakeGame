@@ -14,6 +14,7 @@
 		CD6F0D3A2232D85800B36A6F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD6F0D382232D85800B36A6F /* LaunchScreen.storyboard */; };
 		CD6F0D452232D85900B36A6F /* SnakeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6F0D442232D85900B36A6F /* SnakeTests.swift */; };
 		CD6F0D522232E72C00B36A6F /* SnakeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6F0D512232E72C00B36A6F /* SnakeManager.swift */; };
+		CD6F0D562233E7D600B36A6F /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6F0D552233E7D600B36A6F /* BoardView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +39,7 @@
 		CD6F0D442232D85900B36A6F /* SnakeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnakeTests.swift; sourceTree = "<group>"; };
 		CD6F0D462232D85900B36A6F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CD6F0D512232E72C00B36A6F /* SnakeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnakeManager.swift; sourceTree = "<group>"; };
+		CD6F0D552233E7D600B36A6F /* BoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +88,7 @@
 				CD6F0D382232D85800B36A6F /* LaunchScreen.storyboard */,
 				CD6F0D3B2232D85800B36A6F /* Info.plist */,
 				CD6F0D512232E72C00B36A6F /* SnakeManager.swift */,
+				CD6F0D552233E7D600B36A6F /* BoardView.swift */,
 			);
 			path = Snake;
 			sourceTree = "<group>";
@@ -201,6 +204,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CD6F0D322232D85700B36A6F /* GameViewController.swift in Sources */,
+				CD6F0D562233E7D600B36A6F /* BoardView.swift in Sources */,
 				CD6F0D302232D85700B36A6F /* AppDelegate.swift in Sources */,
 				CD6F0D522232E72C00B36A6F /* SnakeManager.swift in Sources */,
 			);

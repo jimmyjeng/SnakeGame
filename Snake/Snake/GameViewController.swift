@@ -14,6 +14,9 @@ class GameViewController: UIViewController {
     var checkTimer:Timer?
     var playing:Bool = false
     
+    var boardData = [[Int]]()
+    var boardView:UIView?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -21,7 +24,12 @@ class GameViewController: UIViewController {
         setUpGesture()
         self.checkTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.tick), userInfo: nil, repeats: true)
         
-
+        for i in 0..<10 {
+            boardData.append([Int]())
+            for _ in 0..<10 {
+                boardData[i].append(0)
+            }
+        }
     }
 
     func setUpGesture() {
@@ -43,10 +51,15 @@ class GameViewController: UIViewController {
         
     }
     
+    
     @IBAction func onStartClicked(_ sender: Any) {
         print("## onStartClicked")
         playing = true
         startButton.isHidden = true
+       
+        self.boardView = BoardView(frame: CGRect(x: view.safeAreaInsets.left, y: view.safeAreaInsets.top, width: view.safeAreaLayoutGuide.layoutFrame.size.width, height: view.safeAreaLayoutGuide.layoutFrame.size.height))
+        self.view.insertSubview(self.boardView!, at: 0)
+        
     }
     
     @objc func swipeAction(gesture: UIGestureRecognizer) {
@@ -67,6 +80,7 @@ class GameViewController: UIViewController {
     }
     
     @objc func tick(timer: Timer) {
+        self.boardView?.setNeedsDisplay()
         guard playing else {
             return
         }
