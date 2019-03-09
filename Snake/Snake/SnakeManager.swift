@@ -29,16 +29,17 @@ class SnakeManager {
     weak var delegate:SnakeDelegate?
     var body = [Point]()
     var direction:Direction = .up
+    var food:Point?
     var initLength = 3
     var boardWidth:Int = 0
     var boardHeight:Int = 0
 
     
     func setBoardData(width:Int, height:Int, snakeLenght:Int) {
-        guard width >= 5 && height >= 5 && snakeLenght >= 3 else {
-            print("### setBoard Error")
-            return
-        }
+//        guard width >= 5 && height >= 5 && snakeLenght >= 3 else {
+//            print("### setBoard Error")
+//            return
+//        }
         
         boardWidth = width
         boardHeight = height
@@ -48,7 +49,6 @@ class SnakeManager {
         for i in 0..<snakeLenght {
             body.append(Point(x: boardWidth / 2, y: boardHeight / 2 + i))
         }
-        
     }
 
     func next() {
@@ -86,4 +86,18 @@ class SnakeManager {
         }
     }
     
+    func generateFood() {
+        guard (body.count < boardWidth * boardHeight) else {
+            print("no more food")
+            delegate?.gameFinish()
+            return
+        }
+        let x = Int.random(in: 0..<boardWidth)
+        let y = Int.random(in: 0..<boardHeight)
+        let foodPoint = Point(x: x, y: y)
+        if (body.contains(where: {$0.x == foodPoint.x && $0.y == foodPoint.y})) {
+            generateFood()
+        }
+        food = foodPoint
+    }
 }

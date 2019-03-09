@@ -8,7 +8,9 @@
 
 import UIKit
 
-
+let BOARD_WIDTH = 10
+let BOARD_HEIGHT = 20
+let SNAKE_LENGTH = 3
 
 class GameViewController: UIViewController {
 
@@ -24,7 +26,7 @@ class GameViewController: UIViewController {
         
         setUpGesture()
         SnakeManager.shared.delegate = self
-        self.checkTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.tick), userInfo: nil, repeats: true)
+        self.checkTimer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(self.tick), userInfo: nil, repeats: true)
         
     }
 
@@ -41,7 +43,7 @@ class GameViewController: UIViewController {
         swipeLeft.direction = UISwipeGestureRecognizer.Direction.left
         self.view.addGestureRecognizer(swipeLeft)
         
-        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(self.swipeAction(gesture:)))
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(self.swipeAction))
         swipeRight.direction = UISwipeGestureRecognizer.Direction.right
         self.view.addGestureRecognizer(swipeRight)
         
@@ -49,15 +51,15 @@ class GameViewController: UIViewController {
     
     
     @IBAction func onStartClicked(_ sender: Any) {
-        playing = true
-        startButton.isHidden = true
-       
-        // FIXME: check size
-        SnakeManager.shared.setBoardData(width: 10, height: 20, snakeLenght: 5)
+
+        SnakeManager.shared.setBoardData(width: BOARD_WIDTH, height: BOARD_HEIGHT, snakeLenght: SNAKE_LENGTH)
         
         self.boardView = BoardView(frame: CGRect(x: view.safeAreaInsets.left, y: view.safeAreaInsets.top, width: view.safeAreaLayoutGuide.layoutFrame.size.width, height: view.safeAreaLayoutGuide.layoutFrame.size.height))
         self.view.insertSubview(self.boardView!, at: 0)
         
+        SnakeManager.shared.generateFood()
+        playing = true
+        startButton.isHidden = true
     }
     
     @objc func swipeAction(gesture: UIGestureRecognizer) {
@@ -82,8 +84,8 @@ class GameViewController: UIViewController {
             return
         }
         print("## tick")
-        SnakeManager.shared.next()
         self.boardView?.setNeedsDisplay()
+        SnakeManager.shared.next()
     }
 
 }
@@ -102,14 +104,13 @@ extension GameViewController: SnakeDelegate {
             style: .default,
             handler: {[weak self]
                 action in
-                SnakeManager.shared.setBoardData(width: 10, height: 20, snakeLenght: 5)
+                SnakeManager.shared.setBoardData(width: BOARD_WIDTH, height: BOARD_HEIGHT, snakeLenght: SNAKE_LENGTH)
+                self?.boardView?.setNeedsDisplay()
                 self?.playing = true
         })
         
         alertController.addAction(okAction)
         
-        // 顯示提示框
         self.present(alertController, animated: true, completion: nil)
-        
     }
 }
