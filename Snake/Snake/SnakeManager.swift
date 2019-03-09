@@ -20,8 +20,13 @@ struct Point {
     var y:Int
 }
 
+protocol SnakeDelegate: class {
+    func gameFinish () 
+}
+
 class SnakeManager {
     static let shared = SnakeManager()
+    weak var delegate:SnakeDelegate?
     var body = [Point]()
     var direction:Direction = .up
     var initLength = 3
@@ -29,7 +34,7 @@ class SnakeManager {
     var boardHeight:Int = 0
 
     
-    func setBoardSize(width:Int, height:Int, snakeLenght:Int) {
+    func setBoardData(width:Int, height:Int, snakeLenght:Int) {
         guard width >= 5 && height >= 5 && snakeLenght >= 3 else {
             print("### setBoard Error")
             return
@@ -38,14 +43,12 @@ class SnakeManager {
         boardWidth = width
         boardHeight = height
         initLength = snakeLenght
-        
+        direction = .up
+        body = [Point]()
         for i in 0..<snakeLenght {
             body.append(Point(x: boardWidth / 2, y: boardHeight / 2 + i))
         }
         
-        for item in body {
-            print("@@ body \(item.x) \(item.y)")
-        }
     }
 
     func next() {
@@ -60,8 +63,15 @@ class SnakeManager {
         case .right:
             headPoint.x += 1
         }
-        body.insert(headPoint, at: 0)
-        body.removeLast()
+        
+        if (headPoint.x >= boardWidth || headPoint.y >= boardHeight || headPoint.x < 0 || headPoint.y < 0) {
+            delegate?.gameFinish()
+        } else if (body.contains(where: {$0.x == headPoint.x && $0.y == headPoint.y})) {
+            delegate?.gameFinish()
+        } else {
+            body.insert(headPoint, at: 0)
+            body.removeLast()
+        }
     }
     
     func changeDirection(newDirection: Direction) {

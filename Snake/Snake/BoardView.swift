@@ -41,15 +41,6 @@ class BoardView: UIView {
                     UIColor.black.setFill()
                     path.fill()
                 }
-//                if i == 1 && j == 1 {
-//                    UIColor.black.setFill()
-//                    path.fill()
-//                }
-//                
-//                if i == 3 && j == 3 {
-//                    UIColor.blue.setFill()
-//                    path.fill()
-//                }
             }
         }
     }

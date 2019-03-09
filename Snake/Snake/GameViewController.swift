@@ -8,28 +8,24 @@
 
 import UIKit
 
+
+
 class GameViewController: UIViewController {
 
     @IBOutlet weak var startButton: UIButton!
     var checkTimer:Timer?
     var playing:Bool = false
-    
-    var boardData = [[Int]]()
     var boardView:UIView?
+    var score:Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
         setUpGesture()
+        SnakeManager.shared.delegate = self
         self.checkTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.tick), userInfo: nil, repeats: true)
         
-        for i in 0..<10 {
-            boardData.append([Int]())
-            for _ in 0..<10 {
-                boardData[i].append(0)
-            }
-        }
     }
 
     func setUpGesture() {
@@ -57,8 +53,7 @@ class GameViewController: UIViewController {
         startButton.isHidden = true
        
         // FIXME: check size
-        SnakeManager.shared.setBoardSize(width: 5, height: 10, snakeLenght: 3)
-        
+        SnakeManager.shared.setBoardData(width: 10, height: 20, snakeLenght: 5)
         
         self.boardView = BoardView(frame: CGRect(x: view.safeAreaInsets.left, y: view.safeAreaInsets.top, width: view.safeAreaLayoutGuide.layoutFrame.size.width, height: view.safeAreaLayoutGuide.layoutFrame.size.height))
         self.view.insertSubview(self.boardView!, at: 0)
@@ -69,17 +64,13 @@ class GameViewController: UIViewController {
         if let swipeGesture = gesture as? UISwipeGestureRecognizer {
             switch swipeGesture.direction {
             case UISwipeGestureRecognizer.Direction.up:
-                print("## up")
                 SnakeManager.shared.changeDirection(newDirection: .up)
             case UISwipeGestureRecognizer.Direction.down:
                 SnakeManager.shared.changeDirection(newDirection: .down)
-                print("## down")
             case UISwipeGestureRecognizer.Direction.left:
                 SnakeManager.shared.changeDirection(newDirection: .left)
-                print("## left")
             case UISwipeGestureRecognizer.Direction.right:
                 SnakeManager.shared.changeDirection(newDirection: .right)
-                print("## right")
             default:
                 break
             }
@@ -97,3 +88,28 @@ class GameViewController: UIViewController {
 
 }
 
+extension GameViewController: SnakeDelegate {
+    func gameFinish() {
+        playing = false
+        
+        let alertController = UIAlertController(
+            title: "Game Over",
+            message: "Score:\(score)",
+            preferredStyle: .alert)
+        
+        let okAction = UIAlertAction(
+            title: "Try Again",
+            style: .default,
+            handler: {[weak self]
+                action in
+                SnakeManager.shared.setBoardData(width: 10, height: 20, snakeLenght: 5)
+                self?.playing = true
+        })
+        
+        alertController.addAction(okAction)
+        
+        // 顯示提示框
+        self.present(alertController, animated: true, completion: nil)
+        
+    }
+}
