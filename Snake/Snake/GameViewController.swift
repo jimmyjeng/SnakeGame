@@ -53,10 +53,13 @@ class GameViewController: UIViewController {
     
     
     @IBAction func onStartClicked(_ sender: Any) {
-        print("## onStartClicked")
         playing = true
         startButton.isHidden = true
        
+        // FIXME: check size
+        SnakeManager.shared.setBoardSize(width: 5, height: 10, snakeLenght: 3)
+        
+        
         self.boardView = BoardView(frame: CGRect(x: view.safeAreaInsets.left, y: view.safeAreaInsets.top, width: view.safeAreaLayoutGuide.layoutFrame.size.width, height: view.safeAreaLayoutGuide.layoutFrame.size.height))
         self.view.insertSubview(self.boardView!, at: 0)
         
@@ -67,11 +70,15 @@ class GameViewController: UIViewController {
             switch swipeGesture.direction {
             case UISwipeGestureRecognizer.Direction.up:
                 print("## up")
+                SnakeManager.shared.changeDirection(newDirection: .up)
             case UISwipeGestureRecognizer.Direction.down:
+                SnakeManager.shared.changeDirection(newDirection: .down)
                 print("## down")
             case UISwipeGestureRecognizer.Direction.left:
+                SnakeManager.shared.changeDirection(newDirection: .left)
                 print("## left")
             case UISwipeGestureRecognizer.Direction.right:
+                SnakeManager.shared.changeDirection(newDirection: .right)
                 print("## right")
             default:
                 break
@@ -80,11 +87,12 @@ class GameViewController: UIViewController {
     }
     
     @objc func tick(timer: Timer) {
-        self.boardView?.setNeedsDisplay()
         guard playing else {
             return
         }
-        print("@@ tick")
+        print("## tick")
+        SnakeManager.shared.next()
+        self.boardView?.setNeedsDisplay()
     }
 
 }

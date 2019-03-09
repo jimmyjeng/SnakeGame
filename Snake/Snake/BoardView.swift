@@ -9,8 +9,6 @@
 import UIKit
 
 class BoardView: UIView {
-    var boardWidth:Int = 5
-    var boardHeight:Int = 10
     
     override func draw(_ rect: CGRect) {
         // Drawing code
@@ -18,9 +16,8 @@ class BoardView: UIView {
         
         UIColor.brown.set()
         UIBezierPath(rect: rect).fill()
-        
-        let cellWidth = self.frame.width / CGFloat(boardWidth)
-        let cellHeight = self.frame.height / CGFloat(boardHeight)
+        let cellWidth = self.frame.width / CGFloat(SnakeManager.shared.boardWidth)
+        let cellHeight = self.frame.height / CGFloat(SnakeManager.shared.boardHeight)
         
 //        for i in 0..<boardHeight {
 //            for j in 0..<boardWidth {
@@ -33,21 +30,26 @@ class BoardView: UIView {
 //            }
 //        }
         
-        for i in 0..<boardHeight {
-            for j in 0..<boardWidth {
+        for i in 0..<SnakeManager.shared.boardHeight {
+            for j in 0..<SnakeManager.shared.boardWidth {
             let path = UIBezierPath(rect: CGRect(x: CGFloat(j) * cellWidth,   y: CGFloat(i) * cellHeight, width: cellWidth, height: cellHeight))
                 UIColor.red.setStroke()
                 path.stroke()
                 
-                if i == 1 && j == 1 {
+                let point = Point(x:j, y:i)
+                if (SnakeManager.shared.body.contains(where: {$0.x == point.x && $0.y == point.y})) {
                     UIColor.black.setFill()
                     path.fill()
                 }
-                
-                if i == 3 && j == 3 {
-                    UIColor.blue.setFill()
-                    path.fill()
-                }
+//                if i == 1 && j == 1 {
+//                    UIColor.black.setFill()
+//                    path.fill()
+//                }
+//                
+//                if i == 3 && j == 3 {
+//                    UIColor.blue.setFill()
+//                    path.fill()
+//                }
             }
         }
     }
