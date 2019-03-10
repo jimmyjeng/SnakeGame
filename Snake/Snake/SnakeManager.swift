@@ -9,11 +9,12 @@
 import Foundation
 
 let BOARD_MIN_WIDTH = 5
-let BOARD_MIN_HEIGHT = 5
+let BOARD_MIN_HEIGHT = 10
 let SNAKE_MIN_LENGTH = 3
 let BOARD_MAX_WIDTH = 50
 let BOARD_MAX_HEIGHT = 100
 let SNAKE_MAX_LENGTH = 10
+let SPEED_LEVEL = 3
 
 enum Direction: Int {
     case up
@@ -28,7 +29,8 @@ struct Point {
 }
 
 protocol SnakeDelegate: class {
-    func gameFinish(score:Int) 
+    func speedChange(speed: Int)
+    func gameFinish(score: Int)
 }
 
 class SnakeManager {
@@ -41,6 +43,7 @@ class SnakeManager {
     var boardWidth:Int = 0
     var boardHeight:Int = 0
     var score:Int = 0
+    var speed:Int = 1
     
     func setBoardData(width:Int, height:Int, snakeLenght:Int) -> Bool {
         guard width >= BOARD_MIN_WIDTH && width <= BOARD_MAX_WIDTH
@@ -55,6 +58,7 @@ class SnakeManager {
         initLength = snakeLenght
         direction = .up
         score = 0
+        speed = 1
         body = [Point]()
         for i in 0..<snakeLenght {
             body.append(Point(x: boardWidth / 2, y: boardHeight / 2 + i))
@@ -81,6 +85,11 @@ class SnakeManager {
             delegate?.gameFinish(score: score)
         } else if (headPoint.x == food?.x && headPoint.y == food?.y) {
             score += 1
+            let newSpeed = adjustSpeed(score: score)
+            if (newSpeed != speed) {
+                speed = newSpeed
+                delegate?.speedChange(speed: newSpeed)
+            }
             body.insert(headPoint, at: 0)
             generateFood()
         } else {
@@ -111,7 +120,12 @@ class SnakeManager {
         let foodPoint = Point(x: x, y: y)
         if (body.contains(where: {$0.x == foodPoint.x && $0.y == foodPoint.y})) {
             generateFood()
+        } else {
+            food = foodPoint
         }
-        food = foodPoint
+    }
+    
+    func adjustSpeed(score:Int) -> Int {
+        return (score / SPEED_LEVEL) + 1
     }
 }

@@ -9,8 +9,8 @@
 import UIKit
 
 // TODO: user input
-let BOARD_WIDTH = 50
-let BOARD_HEIGHT = 100
+let BOARD_WIDTH = 10
+let BOARD_HEIGHT = 20
 let SNAKE_LENGTH = 3
 
 class GameViewController: UIViewController {
@@ -26,9 +26,12 @@ class GameViewController: UIViewController {
         
         setUpGesture()
         SnakeManager.shared.delegate = self
-        self.checkTimer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(self.tick), userInfo: nil, repeats: true)
     }
-
+    
+    func activeTimer() {
+        self.checkTimer = Timer.scheduledTimer(timeInterval: 1.0 / Double(SnakeManager.shared.speed), target: self, selector: #selector(self.tick), userInfo: nil, repeats: true)
+    }
+    
     func setUpGesture() {
         let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(self.swipeAction))
         swipeUp.direction = UISwipeGestureRecognizer.Direction.up
@@ -54,6 +57,7 @@ class GameViewController: UIViewController {
             SnakeManager.shared.generateFood()
             self.boardView?.setNeedsDisplay()
             playing = true
+            activeTimer()
         } else {
             let alertController = UIAlertController(
                 title: "Error",
@@ -104,8 +108,14 @@ class GameViewController: UIViewController {
 }
 
 extension GameViewController: SnakeDelegate {
+    func speedChange(speed: Int) {
+        checkTimer?.invalidate()
+        activeTimer()
+    }
+    
     func gameFinish(score:Int) {
         playing = false
+        checkTimer?.invalidate()
         
         let alertController = UIAlertController(
             title: "Game Over",

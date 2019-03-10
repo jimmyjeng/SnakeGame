@@ -21,14 +21,21 @@ class SnakeTests: XCTestCase {
     }
 
     func testSnakeSetBoard() {
-        let result0 = snake.setBoardData(width: 5, height: 5, snakeLenght: 3)
-        XCTAssert(result0)
+        XCTAssert(snake.setBoardData(width: BOARD_MIN_WIDTH, height: BOARD_MIN_HEIGHT, snakeLenght: SNAKE_MIN_LENGTH))
         
-        let result1 = snake.setBoardData(width: 1, height: 1, snakeLenght: 1)
-        XCTAssertFalse(result1)
+        XCTAssert(snake.setBoardData(width: BOARD_MAX_WIDTH, height: BOARD_MAX_HEIGHT, snakeLenght: SNAKE_MAX_LENGTH))
         
-        let result2 = snake.setBoardData(width: 100, height: 100, snakeLenght: 100)
-        XCTAssertFalse(result2)
+        XCTAssertFalse(snake.setBoardData(width: 1, height: 1, snakeLenght: 1))
+        
+        XCTAssertFalse(snake.setBoardData(width: 100, height: 100, snakeLenght: 100))
+    }
+    
+    func testSnakeAdjustSpeed() {
+        XCTAssertEqual(snake.adjustSpeed(score: 1), 1)
+        XCTAssertEqual(snake.adjustSpeed(score: 2), 1)
+        XCTAssertEqual(snake.adjustSpeed(score: 3), 2)
+        XCTAssertEqual(snake.adjustSpeed(score: 6), 3)
+        XCTAssertEqual(snake.adjustSpeed(score: 10), 4)
     }
     
     func testExample() {
