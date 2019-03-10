@@ -18,7 +18,6 @@ class GameViewController: UIViewController {
     var checkTimer:Timer?
     var playing:Bool = false
     var boardView:UIView?
-    var score:Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,17 +48,20 @@ class GameViewController: UIViewController {
         
     }
     
+    func setUpGame() {
+        SnakeManager.shared.setBoardData(width: BOARD_WIDTH, height: BOARD_HEIGHT, snakeLenght: SNAKE_LENGTH)
+        SnakeManager.shared.generateFood()
+        self.boardView?.setNeedsDisplay()
+        playing = true
+    }
     
     @IBAction func onStartClicked(_ sender: Any) {
-
-        SnakeManager.shared.setBoardData(width: BOARD_WIDTH, height: BOARD_HEIGHT, snakeLenght: SNAKE_LENGTH)
         
         self.boardView = BoardView(frame: CGRect(x: view.safeAreaInsets.left, y: view.safeAreaInsets.top, width: view.safeAreaLayoutGuide.layoutFrame.size.width, height: view.safeAreaLayoutGuide.layoutFrame.size.height))
         self.view.insertSubview(self.boardView!, at: 0)
         
-        SnakeManager.shared.generateFood()
-        playing = true
         startButton.isHidden = true
+        setUpGame()
     }
     
     @objc func swipeAction(gesture: UIGestureRecognizer) {
@@ -83,15 +85,13 @@ class GameViewController: UIViewController {
         guard playing else {
             return
         }
-        print("## tick")
         self.boardView?.setNeedsDisplay()
         SnakeManager.shared.next()
     }
-
 }
 
 extension GameViewController: SnakeDelegate {
-    func gameFinish() {
+    func gameFinish(score:Int) {
         playing = false
         
         let alertController = UIAlertController(
@@ -104,13 +104,10 @@ extension GameViewController: SnakeDelegate {
             style: .default,
             handler: {[weak self]
                 action in
-                SnakeManager.shared.setBoardData(width: BOARD_WIDTH, height: BOARD_HEIGHT, snakeLenght: SNAKE_LENGTH)
-                self?.boardView?.setNeedsDisplay()
-                self?.playing = true
+                self?.setUpGame()
         })
         
         alertController.addAction(okAction)
-        
         self.present(alertController, animated: true, completion: nil)
     }
 }

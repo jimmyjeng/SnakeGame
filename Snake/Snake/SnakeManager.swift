@@ -21,7 +21,7 @@ struct Point {
 }
 
 protocol SnakeDelegate: class {
-    func gameFinish () 
+    func gameFinish(score:Int) 
 }
 
 class SnakeManager {
@@ -33,18 +33,19 @@ class SnakeManager {
     var initLength = 3
     var boardWidth:Int = 0
     var boardHeight:Int = 0
-
+    var score:Int = 0
     
     func setBoardData(width:Int, height:Int, snakeLenght:Int) {
-//        guard width >= 5 && height >= 5 && snakeLenght >= 3 else {
-//            print("### setBoard Error")
-//            return
-//        }
+        guard width >= 5 && height >= 5 && snakeLenght >= 3 else {
+            print("### setBoard Error")
+            return
+        }
         
         boardWidth = width
         boardHeight = height
         initLength = snakeLenght
         direction = .up
+        score = 0
         body = [Point]()
         for i in 0..<snakeLenght {
             body.append(Point(x: boardWidth / 2, y: boardHeight / 2 + i))
@@ -65,9 +66,13 @@ class SnakeManager {
         }
         
         if (headPoint.x >= boardWidth || headPoint.y >= boardHeight || headPoint.x < 0 || headPoint.y < 0) {
-            delegate?.gameFinish()
+            delegate?.gameFinish(score: score)
         } else if (body.contains(where: {$0.x == headPoint.x && $0.y == headPoint.y})) {
-            delegate?.gameFinish()
+            delegate?.gameFinish(score: score)
+        } else if (headPoint.x == food?.x && headPoint.y == food?.y) {
+            score += 1
+            body.insert(headPoint, at: 0)
+            generateFood()
         } else {
             body.insert(headPoint, at: 0)
             body.removeLast()
@@ -88,8 +93,7 @@ class SnakeManager {
     
     func generateFood() {
         guard (body.count < boardWidth * boardHeight) else {
-            print("no more food")
-            delegate?.gameFinish()
+            delegate?.gameFinish(score: score)
             return
         }
         let x = Int.random(in: 0..<boardWidth)
