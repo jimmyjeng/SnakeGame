@@ -21,7 +21,7 @@ class BoardView: UIView {
         
         for i in 0..<SnakeManager.shared.boardHeight {
             for j in 0..<SnakeManager.shared.boardWidth {
-            let path = UIBezierPath(rect: CGRect(x: CGFloat(j) * cellWidth,   y: CGFloat(i) * cellHeight, width: cellWidth, height: cellHeight))
+                let path = UIBezierPath(rect: CGRect(x: CGFloat(j) * cellWidth,   y: CGFloat(i) * cellHeight, width: cellWidth, height: cellHeight))
                 UIColor.red.setStroke()
                 path.stroke()
                 

@@ -8,6 +8,13 @@
 
 import Foundation
 
+let BOARD_MIN_WIDTH = 5
+let BOARD_MIN_HEIGHT = 5
+let SNAKE_MIN_LENGTH = 3
+let BOARD_MAX_WIDTH = 50
+let BOARD_MAX_HEIGHT = 100
+let SNAKE_MAX_LENGTH = 10
+
 enum Direction: Int {
     case up
     case down
@@ -35,10 +42,12 @@ class SnakeManager {
     var boardHeight:Int = 0
     var score:Int = 0
     
-    func setBoardData(width:Int, height:Int, snakeLenght:Int) {
-        guard width >= 5 && height >= 5 && snakeLenght >= 3 else {
+    func setBoardData(width:Int, height:Int, snakeLenght:Int) -> Bool {
+        guard width >= BOARD_MIN_WIDTH && width <= BOARD_MAX_WIDTH
+            && height >= BOARD_MIN_HEIGHT && height <= BOARD_MAX_HEIGHT
+            && snakeLenght >= SNAKE_MIN_LENGTH && snakeLenght <= SNAKE_MAX_LENGTH else {
             print("### setBoard Error")
-            return
+            return false
         }
         
         boardWidth = width
@@ -50,6 +59,7 @@ class SnakeManager {
         for i in 0..<snakeLenght {
             body.append(Point(x: boardWidth / 2, y: boardHeight / 2 + i))
         }
+        return true
     }
 
     func next() {

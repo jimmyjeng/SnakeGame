@@ -10,7 +10,8 @@ import XCTest
 @testable import Snake
 
 class SnakeTests: XCTestCase {
-
+    let snake = SnakeManager()
+    
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
@@ -19,12 +20,15 @@ class SnakeTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testSnake1() {
-        XCTAssert(true)
-    }
-    
-    func testSnake2() {
-        XCTAssert(false)
+    func testSnakeSetBoard() {
+        let result0 = snake.setBoardData(width: 5, height: 5, snakeLenght: 3)
+        XCTAssert(result0)
+        
+        let result1 = snake.setBoardData(width: 1, height: 1, snakeLenght: 1)
+        XCTAssertFalse(result1)
+        
+        let result2 = snake.setBoardData(width: 100, height: 100, snakeLenght: 100)
+        XCTAssertFalse(result2)
     }
     
     func testExample() {

@@ -8,8 +8,9 @@
 
 import UIKit
 
-let BOARD_WIDTH = 10
-let BOARD_HEIGHT = 20
+// TODO: user input
+let BOARD_WIDTH = 50
+let BOARD_HEIGHT = 100
 let SNAKE_LENGTH = 3
 
 class GameViewController: UIViewController {
@@ -26,7 +27,6 @@ class GameViewController: UIViewController {
         setUpGesture()
         SnakeManager.shared.delegate = self
         self.checkTimer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(self.tick), userInfo: nil, repeats: true)
-        
     }
 
     func setUpGesture() {
@@ -45,18 +45,31 @@ class GameViewController: UIViewController {
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(self.swipeAction))
         swipeRight.direction = UISwipeGestureRecognizer.Direction.right
         self.view.addGestureRecognizer(swipeRight)
-        
     }
     
     func setUpGame() {
-        SnakeManager.shared.setBoardData(width: BOARD_WIDTH, height: BOARD_HEIGHT, snakeLenght: SNAKE_LENGTH)
-        SnakeManager.shared.generateFood()
-        self.boardView?.setNeedsDisplay()
-        playing = true
+        let result = SnakeManager.shared.setBoardData(width: BOARD_WIDTH, height: BOARD_HEIGHT, snakeLenght: SNAKE_LENGTH)
+        
+        if (result) {
+            SnakeManager.shared.generateFood()
+            self.boardView?.setNeedsDisplay()
+            playing = true
+        } else {
+            let alertController = UIAlertController(
+                title: "Error",
+                message: "Game Data Error",
+                preferredStyle: .alert)
+            
+            let okAction = UIAlertAction(
+                title: "OK",
+                style: .default,
+                handler: nil)
+            alertController.addAction(okAction)
+            self.present(alertController, animated: true, completion: nil)
+        }
     }
     
     @IBAction func onStartClicked(_ sender: Any) {
-        
         self.boardView = BoardView(frame: CGRect(x: view.safeAreaInsets.left, y: view.safeAreaInsets.top, width: view.safeAreaLayoutGuide.layoutFrame.size.width, height: view.safeAreaLayoutGuide.layoutFrame.size.height))
         self.view.insertSubview(self.boardView!, at: 0)
         
