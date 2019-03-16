@@ -29,7 +29,7 @@ class GameViewController: UIViewController {
     }
     
     func activeTimer() {
-        self.checkTimer = Timer.scheduledTimer(timeInterval: 1.0 / Double(SnakeManager.shared.speed), target: self, selector: #selector(self.tick), userInfo: nil, repeats: true)
+        self.checkTimer = Timer.scheduledTimer(timeInterval: 1.0 / Double(SnakeManager.shared.getSpeed()), target: self, selector: #selector(self.tick), userInfo: nil, repeats: true)
     }
     
     func setUpGesture() {

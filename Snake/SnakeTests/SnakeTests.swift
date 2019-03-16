@@ -31,11 +31,11 @@ class SnakeTests: XCTestCase {
     }
     
     func testSnakeAdjustSpeed() {
-        XCTAssertEqual(snake.adjustSpeed(score: 1), 1)
-        XCTAssertEqual(snake.adjustSpeed(score: 2), 1)
-        XCTAssertEqual(snake.adjustSpeed(score: 3), 2)
-        XCTAssertEqual(snake.adjustSpeed(score: 6), 3)
-        XCTAssertEqual(snake.adjustSpeed(score: 10), 4)
+        XCTAssertEqual(snake.getSpeed(score: 1), 1)
+        XCTAssertEqual(snake.getSpeed(score: 2), 1)
+        XCTAssertEqual(snake.getSpeed(score: 3), 2)
+        XCTAssertEqual(snake.getSpeed(score: 6), 3)
+        XCTAssertEqual(snake.getSpeed(score: 10), 4)
     }
     
     func testExample() {

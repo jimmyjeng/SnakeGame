@@ -36,14 +36,15 @@ protocol SnakeDelegate: class {
 class SnakeManager {
     static let shared = SnakeManager()
     weak var delegate:SnakeDelegate?
-    var body = [Point]()
-    var direction:Direction = .up
-    var food:Point?
-    var initLength = 3
-    var boardWidth:Int = 0
-    var boardHeight:Int = 0
-    var score:Int = 0
-    var speed:Int = 1
+    private var body = [Point]()
+    private var direction:Direction = .up
+    private var food:Point?
+    private var initLength = 3
+    private var boardWidth:Int = 0
+    private var boardHeight:Int = 0
+    private var score:Int = 0
+    private var speed:Int = 1
+    
     
     func setBoardData(width:Int, height:Int, snakeLenght:Int) -> Bool {
         guard width >= BOARD_MIN_WIDTH && width <= BOARD_MAX_WIDTH
@@ -65,7 +66,19 @@ class SnakeManager {
         }
         return true
     }
+    
+    func getBoardSize() -> (Int, Int){
+        return (boardWidth, boardHeight)
+    }
 
+    func getBody() -> [Point]{
+        return body
+    }
+    
+    func getFood() -> Point? {
+        return food
+    }
+    
     func next() {
         var headPoint = body.first!
         switch direction {
@@ -128,4 +141,9 @@ class SnakeManager {
     func adjustSpeed(score:Int) -> Int {
         return (score / SPEED_LEVEL) + 1
     }
+    
+    func getSpeed() -> Int {
+        return speed
+    }
+    
 }
