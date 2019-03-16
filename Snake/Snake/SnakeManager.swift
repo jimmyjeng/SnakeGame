@@ -44,7 +44,7 @@ class SnakeManager {
     private var boardHeight:Int = 0
     private var score:Int = 0
     private var speed:Int = 1
-    
+    private var lockDirection:Bool = false
     
     func setBoardData(width:Int, height:Int, snakeLenght:Int) -> Bool {
         guard width >= BOARD_MIN_WIDTH && width <= BOARD_MAX_WIDTH
@@ -109,15 +109,21 @@ class SnakeManager {
             body.insert(headPoint, at: 0)
             body.removeLast()
         }
+        lockDirection = false
     }
     
     func changeDirection(newDirection: Direction) {
+        guard lockDirection == false else {
+            return
+        }
         if (direction == .up || direction == .down) {
             if (newDirection == .left || newDirection == .right) {
+                lockDirection = true
                 direction = newDirection
             }
         } else if (direction == .left || direction == .right) {
             if (newDirection == .up || newDirection == .down) {
+                lockDirection = true
                 direction = newDirection
             }
         }
@@ -144,6 +150,10 @@ class SnakeManager {
     
     func getSpeed() -> Int {
         return speed
+    }
+    
+    func setLock(_ lock:Bool) {
+        lockDirection = lock
     }
     
 }
